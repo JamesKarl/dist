@@ -5,7 +5,7 @@ CREATE TABLE `app_info` (
   `type` varchar(255) NOT NULL COMMENT 'android/ios',
   `icon` varchar(255),
   `note` varchar(255)
-);
+) character set = utf8;
 
 CREATE TABLE `app_publish_history` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
@@ -16,6 +16,6 @@ CREATE TABLE `app_publish_history` (
   `size` double COMMENT '文件大小',
   `count` int COMMENT '下载次数',
   `publish_date` timestamp COMMENT '发布时间'
-);
+) character set = utf8;
 
 ALTER TABLE `app_publish_history` ADD FOREIGN KEY (`app_id`) REFERENCES `app_info` (`id`);
