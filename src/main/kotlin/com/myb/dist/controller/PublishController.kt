@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.query.Param
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 
 @RestController
@@ -36,5 +37,11 @@ class PublishController {
                             @RequestParam("pageSize") pageSize: Int
     ): Page<AppPublishHistory> {
         return historyRepository.findAll(PageRequest.of(page, pageSize))
+    }
+
+
+    @PostMapping("detail")
+    fun queryDetail(@Param("appId") appId: Int): Optional<AppInfo> {
+        return appRepository.findById(appId)
     }
 }
