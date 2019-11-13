@@ -1,11 +1,9 @@
 package com.myb.dist.db
 
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
+@Table(name = "AppPublishHistory")
 @Entity
 data class AppPublishHistory(
         @Id
