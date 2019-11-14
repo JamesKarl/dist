@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.servlet.http.HttpServletResponse
 
 
 @RestController
@@ -69,6 +70,18 @@ class PublishController {
         return destName
     }
 
+    @GetMapping("downloadPackage")
+    fun downloadPackage(@RequestParam("fileId") fileId: String, response: HttpServletResponse) {
+        val dest = getDestFile(fileId)
+        if (!dest.second.exists()) return
+        with(response) {
+            setHeader("content-type", "application/octet-stream")
+            contentType = "application/octet-stream"
+            setHeader("Content-Disposition", "attachment;filename=${dest.first}")
+            outputStream.buffered().write(dest.second.inputStream().buffered().readBytes())
+        }
+    }
+
     private fun getRootDir(): File {
         val root = File(config.root)
         if (root.isDirectory) {
@@ -81,5 +94,11 @@ class PublishController {
 
         root.mkdir()
         return root
+    }
+
+    private fun getDestFile(fileId: String): Pair<String, File> {
+        val file = File(getRootDir(), fileId)
+        val name = file.name
+        return name to file
     }
 }
