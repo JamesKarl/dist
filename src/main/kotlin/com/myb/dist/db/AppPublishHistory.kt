@@ -3,8 +3,7 @@ package com.myb.dist.db
 import java.util.*
 import javax.persistence.*
 
-@Table(name = "AppPublishHistory")
-@Entity
+@Entity(name = "app_publish_history")
 data class AppPublishHistory(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)

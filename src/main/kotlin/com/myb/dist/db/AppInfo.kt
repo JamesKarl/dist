@@ -2,8 +2,7 @@ package com.myb.dist.db
 
 import javax.persistence.*
 
-@Table(name = "AppInfo")
-@Entity
+@Entity(name = "app_info")
 data class AppInfo(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)

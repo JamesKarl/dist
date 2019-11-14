@@ -9,7 +9,9 @@ import com.myb.dist.utils.DATE_PATTERN
 import com.myb.dist.utils.toString
 import javafx.scene.input.DataFormat
 import org.apache.tomcat.jni.Directory
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.logging.LogLevel
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.query.Param
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.logging.Logger
 import javax.servlet.http.HttpServletResponse
 
 
@@ -26,6 +29,8 @@ import javax.servlet.http.HttpServletResponse
 @RequestMapping("dist")
 @CrossOrigin
 class PublishController {
+
+    private val logger = LoggerFactory.getLogger(PublishController::class.simpleName)
 
     @Autowired
     lateinit var appRepository: AppInfoRepository
@@ -67,6 +72,9 @@ class PublishController {
         val dest = File(root, destName)
         dest.createNewFile()
         dest.outputStream().buffered().write(file.inputStream.buffered().readBytes())
+        val info = PackageReader.readApkInfo(dest)
+        logger.debug(info.toString())
+        //appRepository.save(info.toAppInfo())
         return destName
     }
 
