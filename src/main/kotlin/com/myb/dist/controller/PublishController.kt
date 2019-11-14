@@ -5,6 +5,9 @@ import com.myb.dist.db.AppInfo
 import com.myb.dist.db.AppInfoRepository
 import com.myb.dist.db.AppPublishHistory
 import com.myb.dist.db.AppPublishHistoryRepository
+import com.myb.dist.utils.DATE_PATTERN
+import com.myb.dist.utils.toString
+import javafx.scene.input.DataFormat
 import org.apache.tomcat.jni.Directory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -27,7 +31,7 @@ class PublishController {
     @Autowired
     lateinit var historyRepository: AppPublishHistoryRepository
     //@Autowired
-    lateinit var config: DistConfig
+    val config = DistConfig()
 
     @GetMapping("hello")
     fun hello(): String {
@@ -54,12 +58,19 @@ class PublishController {
     }
 
     @PostMapping("uploadPackage")
-    fun uploadPackage(@RequestParam("file") file: MultipartFile, redirectAttributes: RedirectAttributes) {
+    fun uploadPackage(@RequestParam("file") file: MultipartFile, redirectAttributes: RedirectAttributes): String? {
+        val originalFilename = file.originalFilename ?: return null
+        val nowString = Date().toString(DATE_PATTERN)
+        val destName = "${nowString}_${originalFilename}"
         val root = getRootDir()
+        val dest = File(root, destName)
+        dest.createNewFile()
+        dest.outputStream().buffered().write(file.inputStream.buffered().readBytes())
+        return destName
     }
 
     private fun getRootDir(): File {
-        val root = File(config.root.toString())
+        val root = File(config.root)
         if (root.isDirectory) {
             return root
         }

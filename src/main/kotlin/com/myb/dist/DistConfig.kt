@@ -5,4 +5,4 @@ import org.springframework.stereotype.Component
 
 //@Component
 //@ConfigurationProperties(prefix = "dist.distributions")
-data class DistConfig(val root: String)
+data class DistConfig(val root: String = "./distributions")
