@@ -2,6 +2,8 @@ package com.myb.dist
 
 import com.myb.dist.controller.PackageInfo
 import com.myb.dist.controller.toAppInfo
+import com.myb.dist.db.AppFile
+import com.myb.dist.db.AppFileRepository
 import com.myb.dist.db.AppInfo
 import com.myb.dist.db.AppInfoRepository
 import org.junit.jupiter.api.Test
@@ -13,6 +15,9 @@ class DistApplicationTests {
 
     @Autowired
     lateinit var appRepository: AppInfoRepository
+
+    @Autowired
+    lateinit var appFileRepository: AppFileRepository
 
     @Test
     fun contextLoads() {
@@ -35,5 +40,13 @@ class DistApplicationTests {
         val appInfo = packageInfo.toAppInfo()
 
 
+    }
+
+
+    @Test
+    fun testAddAppFile() {
+        val appFile = AppFile(name = "test.apk", md5 = "md5xxxxxx", size = 93049034L, path = "/fdipk/fdk")
+        val tmp = appFileRepository.save(appFile)
+        assert(tmp.id != null)
     }
 }
