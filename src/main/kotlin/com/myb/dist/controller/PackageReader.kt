@@ -38,5 +38,5 @@ fun PackageInfo.toAppInfo(): AppInfo {
 }
 
 fun PackageInfo.toAppPublishHistory(appId: Int): AppPublishHistory {
-    return AppPublishHistory(appId = appId, version = versionName, url = "", size = this.size, count = 0, publishDate = Date())
+    return AppPublishHistory(appId = appId, version = versionName, fileId = "", count = 0, publishDate = Date())
 }

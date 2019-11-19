@@ -7,11 +7,13 @@ import com.myb.dist.utils.DATE_PATTERN
 import com.myb.dist.utils.md5
 import com.myb.dist.utils.toString
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import java.util.*
 
-object PackageManager {
+@Service
+class PackageManager {
 
     //@Autowired
     private val config = DistConfig()
@@ -68,5 +70,4 @@ object PackageManager {
     }
 }
 
-val AppFile.file: File?
-    get() = if (path == null) null else File(PackageManager.getRootDir(), path)
+fun AppFile.getFile(root: File): File? = if (path == null) null else File(root, path)
