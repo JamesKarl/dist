@@ -6,13 +6,13 @@ import javax.persistence.*
 @Entity(name = "app_publish_history")
 data class AppPublishHistory(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Int,
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        val id: Int? = null,
         val appId: Int,
         val version: String,
         val note: String? = null,
         val url: String,
-        val size: Double,
+        val size: Long,
         val count: Int,
         val publishDate: Date
 )
