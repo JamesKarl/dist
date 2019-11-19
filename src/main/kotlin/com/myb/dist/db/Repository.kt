@@ -17,3 +17,7 @@ interface AppInfoRepository : CrudRepository<AppInfo, Int> {
 interface AppPublishHistoryRepository : CrudRepository<AppPublishHistory, Int> {
     fun findAll(pageable: Pageable): Page<AppPublishHistory>
 }
+
+
+@Repository
+interface AppFileRepository : CrudRepository<AppFile, Int> {}
