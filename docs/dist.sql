@@ -12,10 +12,20 @@ CREATE TABLE `app_publish_history` (
   `app_id` int NOT NULL,
   `version` varchar(255) NOT NULL COMMENT '版本号',
   `note` varchar(255),
-  `url` varchar(255) COMMENT '下载地址',
+  `file_id` varchar(255) COMMENT '下载地址',
   `size` double COMMENT '文件大小',
   `count` int COMMENT '下载次数',
   `publish_date` timestamp COMMENT '发布时间'
 ) character set = utf8;
 
+CREATE TABLE `app_file` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(255),
+  `md5` varchar(255) UNIQUE NOT NULL,
+  `size` double,
+  `path` varchar(255)
+) character set = utf8;
+
 ALTER TABLE `app_publish_history` ADD FOREIGN KEY (`app_id`) REFERENCES `app_info` (`id`);
+
+ALTER TABLE `app_publish_history` ADD FOREIGN KEY (`file_id`) REFERENCES `app_file` (`id`);
