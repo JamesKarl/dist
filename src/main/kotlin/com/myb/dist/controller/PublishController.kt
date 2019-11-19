@@ -74,7 +74,7 @@ class PublishController {
         dest.outputStream().buffered().write(file.inputStream.buffered().readBytes())
         val info = PackageReader.readApkInfo(dest)
         logger.debug(info.toString())
-        //appRepository.save(info.toAppInfo())
+        appRepository.save(info.toAppInfo())
         return destName
     }
 

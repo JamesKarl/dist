@@ -5,8 +5,8 @@ import javax.persistence.*
 @Entity(name = "app_info")
 data class AppInfo(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Int,
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        val id: Int? = null,
         val appId: String,
         val name: String,
         val type: String,

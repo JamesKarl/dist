@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository
 @Repository
 interface AppInfoRepository : CrudRepository<AppInfo, Int> {
     fun findAll(pageable: Pageable): Page<AppInfo>
+    fun findAllByAppId(appId: String): List<AppInfo>
+    fun findAllByAppIdContains(appId: String): List<AppInfo>
+    fun deleteAllByAppId(appId: String)
 }
 
 @Repository
