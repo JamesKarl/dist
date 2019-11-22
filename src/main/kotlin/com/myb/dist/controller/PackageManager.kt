@@ -38,6 +38,11 @@ class PackageManager {
         return appFileRepository.save(fileInfo)
     }
 
+    fun save(file: File): AppFile? {
+        val fileInfo = AppFile(name = file.name, md5 = file.md5(), size = file.length(), path = file.name)
+        return appFileRepository.save(fileInfo)
+    }
+
     /**
      * 查询文件
      *

@@ -40,6 +40,9 @@ class PublishController {
     @Autowired
     lateinit var packageManager: PackageManager
 
+    @Autowired
+    lateinit var packageReader: PackageReader
+
     @GetMapping("hello")
     fun hello(): String {
         return "Hello, world"
@@ -68,7 +71,7 @@ class PublishController {
     fun uploadPackage(@RequestParam("file") file: MultipartFile, redirectAttributes: RedirectAttributes): Int? {
         val appInfo = packageManager.save(file) ?: return null
         val destFile = appInfo.getFile(packageManager.getRootDir()) ?: return null
-        val info = PackageReader.readApkInfo(destFile)
+        val info = packageReader.readApkInfo(destFile)
         appRepository.save(info.toAppInfo()).apply {
             historyRepository.save(info.toAppPublishHistory(id!!, appInfo.id!!))
         }

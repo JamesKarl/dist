@@ -4,6 +4,8 @@ import com.myb.dist.db.AppInfo
 import com.myb.dist.db.AppPublishHistory
 import com.myb.dist.utils.md5
 import net.dongliu.apk.parser.ApkParser
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 import java.io.File
 import java.util.*
 
@@ -24,15 +26,27 @@ data class PackageInfo(
             && md5.isNotEmpty()
 }
 
-object PackageReader {
+@Service
+class PackageReader {
+    @Autowired
+    lateinit var packageManager: PackageManager
+
     fun readApkInfo(file: File): PackageInfo {
-        val apk = ApkParser(file).apkMeta
+        val apk = ApkParser(file)
+        val apkMeta = apk.apkMeta
+
+        val iconFile = File(packageManager.getRootDir(), apkMeta.packageName + ".png")
+        if (iconFile.exists()) {
+            iconFile.delete()
+        }
+        iconFile.writeBytes(apk.iconFile.data)
+        val iconInfo = packageManager.save(iconFile)
         return PackageInfo(
-                name = apk.name,
-                versionName = apk.versionName,
-                versionCode = apk.versionCode,
-                icon = apk.icon,
-                pkgId = apk.packageName,
+                name = apkMeta.name,
+                versionName = apkMeta.versionName,
+                versionCode = apkMeta.versionCode,
+                icon = iconInfo?.id?.toString() ?: "",
+                pkgId = apkMeta.packageName,
                 size = file.length(),
                 md5 = file.md5()
         )
