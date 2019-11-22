@@ -15,7 +15,14 @@ data class PackageInfo(
         val pkgId: String,
         val size: Long,
         val md5: String
-)
+) {
+    fun valid(): Boolean = versionName.isNotEmpty()
+            && versionCode > 0
+            && icon.isNotEmpty()
+            && pkgId.isNotEmpty()
+            && size > 0
+            && md5.isNotEmpty()
+}
 
 object PackageReader {
     fun readApkInfo(file: File): PackageInfo {
