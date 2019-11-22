@@ -37,6 +37,6 @@ fun PackageInfo.toAppInfo(): AppInfo {
     return AppInfo(appId = pkgId, name = name, icon = icon, type = "android", id = Date().time.toInt())
 }
 
-fun PackageInfo.toAppPublishHistory(appId: Int): AppPublishHistory {
-    return AppPublishHistory(appId = appId, version = versionName, fileId = "", count = 0, publishDate = Date())
+fun PackageInfo.toAppPublishHistory(appId: Int, fileId: Int): AppPublishHistory {
+    return AppPublishHistory(appId = appId, version = versionName, fileId = fileId, count = 0, publishDate = Date())
 }

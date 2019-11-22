@@ -70,7 +70,7 @@ class PublishController {
         val destFile = appInfo.getFile(packageManager.getRootDir()) ?: return null
         val info = PackageReader.readApkInfo(destFile)
         appRepository.save(info.toAppInfo()).apply {
-            historyRepository.save(info.toAppPublishHistory(id!!))
+            historyRepository.save(info.toAppPublishHistory(id!!, appInfo.id!!))
         }
         return appInfo.id
     }

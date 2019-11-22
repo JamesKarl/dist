@@ -11,7 +11,7 @@ data class AppPublishHistory(
         val appId: Int,
         val version: String,
         val note: String? = null,
-        val fileId: String,
+        val fileId: Int,
         val count: Int,
         val publishDate: Date
 )
