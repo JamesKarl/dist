@@ -7,8 +7,9 @@ import org.springframework.stereotype.Component
 //@ConfigurationProperties(prefix = "dist.distributions")
 data class DistConfig(val root: String = "./distributions")
 
+@Component
 @ConfigurationProperties(prefix = "dist.test")
 class DistTestConfig {
-    lateinit var apk: String
-    lateinit var ipa: String
+    val apk: String = "/home/jameskarl/myb/code/demo/test/shop-v1.8.4.apk"
+    val ipa: String = "/home/jameskarl/myb/code/demo/test/Runner.ipa"
 }
